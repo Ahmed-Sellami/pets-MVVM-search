@@ -2,10 +2,11 @@ Pets App
 ===================================
 
 A pet shelter app created with MVVM architecture and search functionality.
-<br>
-I took the Pets app, developed by the Udacity team for their introductory course Android Basic: Data Storage, and refactored the code with the latest APIs provided by Android.
 
 <img src = "pics/list.png"/>  <img src = "pics/ripple_effect.gif"/>  <img src = "pics/search.png"/> 
+
+<br>
+I took the Pets app, developed by the Udacity team for their introductory course Android Basic: Data Storage, and refactored the code with the latest APIs provided by Android.
 
 <br>
 
