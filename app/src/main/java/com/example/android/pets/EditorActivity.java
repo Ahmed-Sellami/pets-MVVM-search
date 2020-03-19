@@ -22,7 +22,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.android.pets.data.Pet;
-import com.example.android.pets.data.PetViewModel;
+import com.example.android.pets.model.PetViewModel;
 
 import java.io.ByteArrayOutputStream;
 
@@ -66,12 +66,7 @@ public class EditorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
 
-        // Find all relevant views that we will need to read user input from
-        mNameEditText = findViewById(R.id.edit_pet_name);
-        mBreedEditText = findViewById(R.id.edit_pet_breed);
-        mWeightEditText = findViewById(R.id.edit_pet_weight);
-        mGenderSpinner = findViewById(R.id.spinner_gender);
-        mImageView = findViewById(R.id.pet_image);
+        setViews();
 
         setupSpinner();
 
@@ -90,6 +85,15 @@ public class EditorActivity extends AppCompatActivity {
             mImageView.setImageBitmap(bmp);
         }
 
+    }
+
+    void setViews() {
+        // Find all relevant views that we will need to read user input from
+        mNameEditText = findViewById(R.id.edit_pet_name);
+        mBreedEditText = findViewById(R.id.edit_pet_breed);
+        mWeightEditText = findViewById(R.id.edit_pet_weight);
+        mGenderSpinner = findViewById(R.id.spinner_gender);
+        mImageView = findViewById(R.id.pet_image);
     }
 
     /**

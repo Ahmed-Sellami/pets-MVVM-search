@@ -5,8 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.android.pets.adapter.PetListAdapter;
 import com.example.android.pets.data.Pet;
-import com.example.android.pets.data.PetViewModel;
+import com.example.android.pets.model.PetViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -36,16 +38,14 @@ public class CatalogActivity extends AppCompatActivity {
 
     View mEmptyShelter;
 
+    RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalog);
 
-        mEmptyShelter = findViewById(R.id.empty_shelter);
-        mSearchView = findViewById(R.id.searchView);
-
-        RecyclerView recyclerView = findViewById(R.id.recyclerview);
-
+        setUI();
 
         mAdapter = new PetListAdapter(this);
 
@@ -64,15 +64,17 @@ public class CatalogActivity extends AppCompatActivity {
             else mEmptyShelter.setVisibility(View.VISIBLE);
         });
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> {
-            Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
-            startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
-        });
 
+        setSearchView();
+
+    }
+
+    void setSearchView() {
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
+
+        assert searchManager != null;
         mSearchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
 
@@ -81,12 +83,11 @@ public class CatalogActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String s) {
                 if (containsName(PetListAdapter.allPets, s.toUpperCase())) {
                     mAdapter.getFilter().filter(s);
-                }
-                else {
+                } else {
                     Toast.makeText(getBaseContext(),
-                                    "Not found",
-                                    Toast.LENGTH_LONG)
-                                    .show();
+                            "Not found",
+                            Toast.LENGTH_LONG)
+                            .show();
                 }
                 return false;
             }
@@ -97,8 +98,20 @@ public class CatalogActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    void setUI() {
+
+        mEmptyShelter = findViewById(R.id.empty_shelter);
+        mSearchView = findViewById(R.id.searchView);
+        recyclerView = findViewById(R.id.recyclerview);
 
 
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
+            startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
+        });
 
     }
 
@@ -124,13 +137,13 @@ public class CatalogActivity extends AppCompatActivity {
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             Pet pet = new Pet(
                     0,
-                    data.getStringExtra("Name"),
-                    data.getStringExtra("Breed"),
+                    Objects.requireNonNull(data.getStringExtra("Name")),
+                    Objects.requireNonNull(data.getStringExtra("Breed")),
                     data.getIntExtra("Gender", 0),
                     data.getIntExtra("Weight", 0),
                     data.getByteArrayExtra("Image"));
 
-            //mEmptyShelter.setVisibility(View.GONE);
+
             mPetViewModel.insert(pet);
 
         } else if(resultCode != RESULT_OK) {

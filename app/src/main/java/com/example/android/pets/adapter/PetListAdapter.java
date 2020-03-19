@@ -1,4 +1,4 @@
-package com.example.android.pets;
+package com.example.android.pets.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.pets.EditorActivity;
+import com.example.android.pets.R;
 import com.example.android.pets.data.Pet;
 
 import java.util.ArrayList;
@@ -51,9 +53,11 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
 
     private final LayoutInflater mInflater;
     private List<Pet> mPets;
-    static List<Pet> allPets;
+    public static List<Pet> allPets;
 
-    PetListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
+    public PetListAdapter(Context context) {
+        mInflater = LayoutInflater.from(context);
+    }
 
     @NonNull
     @Override
@@ -94,7 +98,7 @@ public class PetListAdapter extends RecyclerView.Adapter<PetListAdapter.PetViewH
     }
 
 
-    void setPets(List<Pet> pets){
+    public void setPets(List<Pet> pets) {
         this.mPets = pets;
         allPets = pets;
         notifyDataSetChanged();

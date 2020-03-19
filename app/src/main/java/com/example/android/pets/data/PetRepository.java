@@ -3,6 +3,7 @@ package com.example.android.pets.data;
 import android.app.Application;
 
 import java.util.List;
+import java.util.Objects;
 
 import androidx.lifecycle.LiveData;
 
@@ -11,19 +12,19 @@ public class PetRepository {
     private PetDao mPetDao;
     private LiveData<List<Pet>> mAllPets;
 
-    PetRepository(Application application){
+    public PetRepository(Application application) {
         PetsDatabase db = PetsDatabase.getDatabase(application);
         mPetDao = db.petDao();
         mAllPets = mPetDao.getPets();
     }
 
-    LiveData<List<Pet>> getAllPets() {
+    public LiveData<List<Pet>> getAllPets() {
         return mAllPets;
     }
 
-    Pet getPet(int id){
+    public Pet getPet(int id) {
         for (Pet pet :
-                mAllPets.getValue()) {
+                Objects.requireNonNull(mAllPets.getValue())) {
             if(pet.getId() == id)
                 return pet;
         }
@@ -31,13 +32,15 @@ public class PetRepository {
     }
 
 
-    void insert(final Pet pet) {
+    public void insert(final Pet pet) {
         PetsDatabase.databaseWriteExecutor.execute(() -> mPetDao.insert(pet));
     }
-    void delete(final Pet pet){
+
+    public void delete(final Pet pet) {
         PetsDatabase.databaseWriteExecutor.execute(() -> mPetDao.delete(pet));
     }
-    void update(final Pet pet){
+
+    public void update(final Pet pet) {
         PetsDatabase.databaseWriteExecutor.execute(() -> mPetDao.update(pet));
     }
 
