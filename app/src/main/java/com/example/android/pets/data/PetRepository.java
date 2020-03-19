@@ -1,6 +1,8 @@
 package com.example.android.pets.data;
 
 import android.app.Application;
+import android.os.Handler;
+import android.os.Looper;
 
 import java.util.List;
 import java.util.Objects;
@@ -11,6 +13,7 @@ public class PetRepository {
 
     private PetDao mPetDao;
     private LiveData<List<Pet>> mAllPets;
+
 
     public PetRepository(Application application) {
         PetsDatabase db = PetsDatabase.getDatabase(application);

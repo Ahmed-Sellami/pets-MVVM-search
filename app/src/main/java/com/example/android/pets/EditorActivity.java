@@ -22,8 +22,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.android.pets.data.Pet;
-import com.example.android.pets.model.PetViewModel;
-
 import java.io.ByteArrayOutputStream;
 
 /**
@@ -51,8 +49,6 @@ public class EditorActivity extends AppCompatActivity {
     int weight;
     byte[] imageAsByteArray;
 
-    private PetViewModel mPetViewModel = CatalogActivity.mPetViewModel;
-
     final int PIC_CROP = 1;
 
     /**
@@ -75,7 +71,7 @@ public class EditorActivity extends AppCompatActivity {
             this.setTitle(R.string.update_pet);
             id = extras.getInt("Id");
 
-            Pet selectedPet = mPetViewModel.getPet(id);
+            Pet selectedPet = CatalogActivity.mPetViewModel.getPet(id);
 
             mNameEditText.setText(selectedPet.getName());
             mBreedEditText.setText(selectedPet.getBreed());
@@ -158,13 +154,13 @@ public class EditorActivity extends AppCompatActivity {
 
     private void updatePet() {
         getValues();
-        mPetViewModel.update(new Pet(id, name, breed, mGender, weight, imageAsByteArray));
+        CatalogActivity.mPetViewModel.update(new Pet(id, name, breed, mGender, weight, imageAsByteArray));
         finish();
     }
 
     private void deletePet() {
         getValues();
-        mPetViewModel.delete(new Pet(id, name, breed, mGender, weight, imageAsByteArray));
+        CatalogActivity.mPetViewModel.delete(new Pet(id, name, breed, mGender, weight, imageAsByteArray));
         finish();
     }
 

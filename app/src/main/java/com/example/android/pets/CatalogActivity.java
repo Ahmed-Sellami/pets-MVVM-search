@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import com.example.android.pets.adapter.PetListAdapter;
 import com.example.android.pets.data.Pet;
-import com.example.android.pets.model.PetViewModel;
+import com.example.android.pets.viewmodel.PetViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;

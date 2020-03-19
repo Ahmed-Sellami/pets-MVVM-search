@@ -1,4 +1,4 @@
-package com.example.android.pets.model;
+package com.example.android.pets.viewmodel;
 
 import android.app.Application;
 
@@ -17,7 +17,6 @@ public class PetViewModel extends AndroidViewModel {
 
     public PetViewModel(Application application){
         super(application);
-        application.onCreate();
         mRepository = new PetRepository(application);
         mAllPets = mRepository.getAllPets();
     }
