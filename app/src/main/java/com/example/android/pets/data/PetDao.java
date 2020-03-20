@@ -19,7 +19,10 @@ public interface PetDao {
     LiveData<List<Pet>> getPets();
 
     @Update
-    int update(Pet pet);
+    void update(Pet pet);
+
+    @Query("SELECT * FROM pet_table WHERE id == :id")
+    Pet getPet(int id);
 
     @Delete
     void delete(Pet pet);

@@ -1,11 +1,9 @@
 package com.example.android.pets.data;
 
 import android.app.Application;
-import android.os.Handler;
-import android.os.Looper;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.concurrent.Future;
 
 import androidx.lifecycle.LiveData;
 
@@ -25,15 +23,6 @@ public class PetRepository {
         return mAllPets;
     }
 
-    public Pet getPet(int id) {
-        for (Pet pet :
-                Objects.requireNonNull(mAllPets.getValue())) {
-            if(pet.getId() == id)
-                return pet;
-        }
-        return null;
-    }
-
 
     public void insert(final Pet pet) {
         PetsDatabase.databaseWriteExecutor.execute(() -> mPetDao.insert(pet));
@@ -47,4 +36,7 @@ public class PetRepository {
         PetsDatabase.databaseWriteExecutor.execute(() -> mPetDao.update(pet));
     }
 
+    public Future<Pet> getPet(final int id) {
+        return PetsDatabase.databaseWriteExecutor.submit(() -> mPetDao.getPet(id));
+    }
 }

@@ -6,6 +6,7 @@ import com.example.android.pets.data.Pet;
 import com.example.android.pets.data.PetRepository;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -25,7 +26,17 @@ public class PetViewModel extends AndroidViewModel {
         return mAllPets;
     }
 
-    public Pet getPet(int id){return mRepository.getPet(id);}
+    public Pet getPet(int id) {
+        Pet pet = null;
+        try {
+            pet = mRepository.getPet(id).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return pet;
+    }
 
     public void insert(Pet pet) {mRepository.insert(pet);}
 
