@@ -12,17 +12,14 @@ public class PetRepository {
     private PetDao mPetDao;
     private LiveData<List<Pet>> mAllPets;
 
-
-    public PetRepository(Application application) {
-        PetsDatabase db = PetsDatabase.getDatabase(application);
-        mPetDao = db.petDao();
+    public PetRepository(PetDao petDao) {
+        mPetDao = petDao;
         mAllPets = mPetDao.getPets();
     }
 
     public LiveData<List<Pet>> getAllPets() {
         return mAllPets;
     }
-
 
     public void insert(final Pet pet) {
         PetsDatabase.databaseWriteExecutor.execute(() -> mPetDao.insert(pet));

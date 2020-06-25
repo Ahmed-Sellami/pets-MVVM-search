@@ -22,7 +22,7 @@ public abstract class PetsDatabase extends RoomDatabase {
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static PetsDatabase getDatabase(final Context context) {
+    public static PetsDatabase getDatabase(final Context context) {
         if(INSTANCE == null) {
             synchronized (PetsDatabase.class){
                 INSTANCE = Room.databaseBuilder(context.getApplicationContext(),

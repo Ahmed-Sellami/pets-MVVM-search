@@ -30,7 +30,7 @@ public class CatalogActivity extends AppCompatActivity {
 
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
-    public static PetViewModel mPetViewModel;
+    private PetViewModel mPetViewModel;
 
     SearchView mSearchView;
 

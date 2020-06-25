@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.TextUtils;
 import android.view.Menu;
@@ -22,12 +23,16 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.android.pets.data.Pet;
+import com.example.android.pets.viewmodel.PetViewModel;
+
 import java.io.ByteArrayOutputStream;
 
 /**
  * Allows user to create a new pet or edit an existing one.
  */
 public class EditorActivity extends AppCompatActivity {
+
+    private PetViewModel mPetViewModel;
 
     private static int RESULT_LOAD_IMAGE = 1;
 
@@ -71,7 +76,9 @@ public class EditorActivity extends AppCompatActivity {
             this.setTitle(R.string.update_pet);
             id = extras.getInt("Id");
 
-            Pet selectedPet = CatalogActivity.mPetViewModel.getPet(id);
+            mPetViewModel = new ViewModelProvider(this).get(PetViewModel.class);
+
+            Pet selectedPet = mPetViewModel.getPet(id);
 
             mNameEditText.setText(selectedPet.getName());
             mBreedEditText.setText(selectedPet.getBreed());
@@ -154,13 +161,13 @@ public class EditorActivity extends AppCompatActivity {
 
     private void updatePet() {
         getValues();
-        CatalogActivity.mPetViewModel.update(new Pet(id, name, breed, mGender, weight, imageAsByteArray));
+        mPetViewModel.update(new Pet(id, name, breed, mGender, weight, imageAsByteArray));
         finish();
     }
 
     private void deletePet() {
         getValues();
-        CatalogActivity.mPetViewModel.delete(new Pet(id, name, breed, mGender, weight, imageAsByteArray));
+        mPetViewModel.delete(new Pet(id, name, breed, mGender, weight, imageAsByteArray));
         finish();
     }
 

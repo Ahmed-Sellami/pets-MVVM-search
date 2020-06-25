@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.example.android.pets.data.Pet;
 import com.example.android.pets.data.PetRepository;
+import com.example.android.pets.data.PetsDatabase;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -18,7 +19,7 @@ public class PetViewModel extends AndroidViewModel {
 
     public PetViewModel(Application application){
         super(application);
-        mRepository = new PetRepository(application);
+        mRepository = new PetRepository(PetsDatabase.getDatabase(application).petDao());
         mAllPets = mRepository.getAllPets();
     }
 
